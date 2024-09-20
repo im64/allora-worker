@@ -44,7 +44,7 @@ To deploy a packaged model in the allora-worker environment, follow these steps:
 
 ##### Package the Model in allora-model-maker
 
-First, go to your allora-model-maker repository and package your trained model using the following command:
+First, go to your [allora-model-maker](https://github.com/allora-network/allora-model-maker) repository and package your trained model using the following command:
 
 ```
 make package-arima
@@ -56,11 +56,11 @@ This will generate a folder called package in the packaged_models directory of t
 
 Next, navigate to the packaged_models folder in allora-model-maker.
 
-	•	Copy the entire package folder.
+	Copy the entire package folder, you will place this into the allora-woker repo in the next step.
 
 ##### Paste into allora-worker
 
-Go to the root folder of your allora-worker repository and paste the copied package folder file into the root directory.
+	Go to the root folder of your allora-worker repository and paste the copied package folder file into the root directory.
 
 Your allora-worker environment is now set up to use the packaged model for inference and training.
 
