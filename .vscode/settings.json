@@ -1,0 +1,17 @@
+{
+    // make sure that you select the correct interpreter!! in our example code we used conda "modelmaker" environment
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit",
+        "source.fixAll": "explicit"
+    },
+    "editor.formatOnSave": true,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "python.analysis.typeCheckingMode": "basic",
+    "python.analysis.autoSearchPaths": true,
+    "python.analysis.useLibraryCodeForTypes": true,
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.black-formatter",
+        "editor.formatOnSave": true
+    }
+}

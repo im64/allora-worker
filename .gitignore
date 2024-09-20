@@ -1,0 +1,13 @@
+package/
+__pycache__
+*.pyc
+.DS_Store
+*/__pycache__/
+*/.ipynb_checkpoints/
+*/.vscode/
+*/.idea/
+*/.pytest_cache/
+*/.mypy_cache/
+*/.mypy/
+*/.coverage
+*/.DS_Store
