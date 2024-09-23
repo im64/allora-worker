@@ -10,7 +10,7 @@ from utils.common import load_model_from_config
 router = APIRouter()
 
 
-@router.get("/getinference")
+@router.get("/inference")
 async def get_inference(
     request: Request,
     payload: str = Query(
@@ -22,7 +22,7 @@ async def get_inference(
     The payload should be passed as a single parameter, containing 'topic_id' and 'data'.
 
     Example usage:
-    curl "http://127.0.0.1:8000/getinference?payload=%7B%22topic_id%22%3A%201%2C%20%22data%22%3A%20%7B%22date%22%3A%20%5B%222024-09-06%22%2C%20%222024-09-07%22%5D%2C%20%22open%22%3A%20%5B2400%2C%202700%5D%2C%20%22high%22%3A%20%5B2500%2C%202800%5D%2C%20%22low%22%3A%20%5B1500%2C%201900%5D%2C%20%22close%22%3A%20%5B1200%2C%202300%5D%2C%20%22volume%22%3A%20%5B1000000%2C%202000000%5D%7D%7D"
+    curl "http://127.0.0.1:8000/inference?payload=%7B%22topic_id%22%3A%201%2C%20%22data%22%3A%20%7B%22date%22%3A%20%5B%222024-09-06%22%2C%20%222024-09-07%22%5D%2C%20%22open%22%3A%20%5B2400%2C%202700%5D%2C%20%22high%22%3A%20%5B2500%2C%202800%5D%2C%20%22low%22%3A%20%5B1500%2C%201900%5D%2C%20%22close%22%3A%20%5B1200%2C%202300%5D%2C%20%22volume%22%3A%20%5B1000000%2C%202000000%5D%7D%7D"
     """
     try:
         # Parse the URL-encoded JSON payload

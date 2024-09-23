@@ -28,7 +28,7 @@ Allora Worker serves as the foundation for running machine learning models as pa
 
 7. [API Endpoints](#api-endpoints)
    - [7.1 POST: /inference/](#post-inference)
-   - [7.2 GET: /getinference/](#get-getinference)
+   - [7.2 GET: /inference/](#get-inference)
    - [7.3 GET: /update-model/](#get-update-model)
 
 8. [Contributing](#contributing)
@@ -166,12 +166,12 @@ The Allora worker exposes the following endpoints:
 ```
 curl -X POST "http://127.0.0.1:8000/inference" -H "Content-Type: application/json" -d ‘{"open": […], "close": […], "volume": […], "high": […], "low": […] }’
 ```
-2.	#### GET: /getinference/
+2.	#### GET: /inference/
 	•	Description: Perform inference using a URL-encoded payload.
 	•	Input: URL-encoded JSON data containing model features.
 	•	Example Usage:
 ```
-curl "http://127.0.0.1:8000/getinference?payload=%7B%22date%22%3A%20%5B…%5D%7D"
+curl "http://127.0.0.1:8000/inference?payload=%7B%22date%22%3A%20%5B…%5D%7D"
 ```
 
 3.	#### GET: /update-model/

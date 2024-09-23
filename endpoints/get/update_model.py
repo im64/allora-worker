@@ -9,7 +9,7 @@ router = APIRouter()
 
 
 @router.get("/update-model")
-async def update_model(
+async def get_update_model(
     request: Request,
 ):
     """
