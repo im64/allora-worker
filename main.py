@@ -77,6 +77,12 @@ def include_routers(_app: FastAPI, directories: list):
 include_routers(app, ["endpoints/get", "endpoints/post"])
 
 
+# place health check endpoint here
+@app.get("/healthcheck")
+async def healthcheck():
+    return {"status": "healthy"}
+
+
 # Catch-all route for all undefined paths
 @app.api_route(
     "/{full_path:path}",

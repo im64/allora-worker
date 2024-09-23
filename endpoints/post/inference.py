@@ -6,7 +6,7 @@ from utils.common import load_model_from_config
 router = APIRouter()
 
 
-@router.post("/inference/")
+@router.post("/inference")
 async def perform_inference(
     request: Request,
     payload: dict = Body(...),

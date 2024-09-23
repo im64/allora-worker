@@ -8,8 +8,8 @@ from utils.common import load_model_from_config
 router = APIRouter()
 
 
-@router.get("/update-model/")
-async def do_train(
+@router.get("/update-model")
+async def update_model(
     request: Request,
 ):
     """
