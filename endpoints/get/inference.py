@@ -1,6 +1,5 @@
 import json
 import urllib.parse
-from typing import Optional
 
 import pandas as pd
 from fastapi import APIRouter, HTTPException, Query, Request
@@ -17,6 +16,7 @@ async def get_inference(
         ..., description="Input data and topic ID as a URL-encoded JSON string"
     ),
 ):
+    # pylint: disable=line-too-long
     """
     Perform inference on the given input data passed as a URL-encoded JSON string.
     The payload should be passed as a single parameter, containing 'topic_id' and 'data'.
