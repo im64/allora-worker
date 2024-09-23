@@ -13,11 +13,17 @@ async def update_model(
     request: Request,
 ):
     """
-    Perform inference on the given input data passed as a URL-encoded JSON string.
-    The input data should be passed in the 'data' parameter, and 'topic_id' is passed as a query parameter.
-
-    Example usage:
-    curl "http://127.0.0.1:8000/update-model"
+    Train the model with the given input data.
+    The input data should contain the 'date', 'open', 'high', 'low', 'close', and 'volume' columns.
+    Example input data:
+    {
+        "date": ["2024-09-06", "2024-09-07"],
+        "open": [2400, 2700],
+        "high": [2500, 2800],
+        "low": [1500, 1900],
+        "close": [1200, 2300],
+        "volume": [1000000, 2000000]
+    }
     """
 
     try:
