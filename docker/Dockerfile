@@ -1,4 +1,7 @@
-# Use the official Python 3.9 slim image as the base image
+# Stage 1: Use the official allora-offchain-node image to extract the binary
+FROM --platform=linux/amd64 alloranetwork/allora-offchain-node:v0.4.0 AS allora_node
+
+# Stage 2: Use the official Python 3.9 slim image for the allora-worker
 FROM python:3.9-slim
 
 # Create a non-privileged user
@@ -23,33 +26,30 @@ ENV MODEL=arima
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy only the requirements first to leverage Docker cache for faster builds
-COPY requirements.txt /app/
+# Copy the project into the working directory
+COPY src/ /app/
 
 # Upgrade pip and install Cython and numpy manually by parsing the requirements.txt
 # they are known nuisances with the pip install -r requirements.txt
 RUN pip install --upgrade pip && \
-    CYTHON_VERSION=$(grep -i '^Cython==' requirements.txt | cut -d'=' -f3) \
-    && NUMPY_VERSION=$(grep -i '^numpy==' requirements.txt | cut -d'=' -f3) \
+    CYTHON_VERSION=$(grep -i '^Cython==' /app/requirements.txt | cut -d'=' -f3) \
+    && NUMPY_VERSION=$(grep -i '^numpy==' /app/requirements.txt | cut -d'=' -f3) \
     && pip install --no-cache-dir Cython==$CYTHON_VERSION numpy==$NUMPY_VERSION
 
 # Install requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt --timeout 1000
 
-# Copy the entire project into the working directory
-COPY . /app/
+# Copy the crontab and setup the cron job
+COPY src/settings/crontab /etc/cron.d/allora_worker_cron
+RUN chmod 0644 /etc/cron.d/allora_worker_cron && crontab /etc/cron.d/allora_worker_cron
 
-# Copy the crontab file into the container and set it
-COPY crontab /etc/cron.d/allora_worker_cron
-
-# Give execution rights on the cron job
-RUN chmod 0644 /etc/cron.d/allora_worker_cron
-
-# Apply the cron job
-RUN crontab /etc/cron.d/allora_worker_cron
+# Copy the allora-offchain-node binary from the first stage
+COPY --from=allora_node /node/allora_offchain_node /usr/local/bin/allora_offchain_node
+# Copy the allonode-data .env file
+COPY ./allonode-data/.env /node/.env
 
 # Copy the supervisor configuration file
-COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY src/settings/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Set permissions to the non-privileged user
 RUN chown -R appuser:appgroup /app

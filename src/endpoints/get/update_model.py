@@ -1,8 +1,12 @@
 import json
+from datetime import datetime, timedelta
 
-import pandas as pd
 from fastapi import APIRouter, HTTPException, Request
 
+# pylint: disable=import-error
+from data.tiingo_data_fetcher import DataFetcher
+
+# pylint: disable=import-error
 from utils.common import load_model_from_config
 
 router = APIRouter()
@@ -27,20 +31,11 @@ async def get_update_model(
     """
 
     try:
-        # [TODO] Put your own data in whatever topic your running is key in this regard.
-        # fake BAD data for now
-        input_data = pd.DataFrame(
-            {
-                "date": pd.date_range(
-                    start="2024-09-06", periods=90, freq="D"
-                ),  # 90 periods for LSTM time_steps
-                "open": [2400, 2700, 3700] * 30,
-                "high": [2500, 2800, 4000] * 30,
-                "low": [1500, 1900, 2500] * 30,
-                "close": [1200, 2300, 3300, 2200, 2100, 3200, 1100, 2100, 2000, 2500]
-                * 9,
-                "volume": [1000000, 2000000, 3000000] * 30,
-            }
+
+        end_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
+        fetcher = DataFetcher()
+        input_data = fetcher.fetch_tiingo_crypto_data(
+            "ethusd", "2021-01-01", end_date, "1day"
         )
 
         # Load the model

@@ -1,6 +1,9 @@
 # Allora Worker
 
-## Overview
+<div style="text-align: center;">
+<img src="https://cdn.prod.website-files.com/667c44f051907593fdb7e7fe/667c789fa233d4f02c1d8cfa_allora-webclip.png" alt="Allora Logo" width="200"/>
+</div>
+
 Allora Worker serves as the foundation for running machine learning models as part of the Allora network. The worker is built using FastAPI for serving model inferences via RESTful APIs. It dynamically loads and runs models from the package folder, making it highly flexible and scalable for adding or switching models.
 
 # Table of Contents

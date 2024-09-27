@@ -48,6 +48,7 @@ pylint==3.2.7
 pyparsing==3.1.4
 pystan==2.19.1.1
 python-dateutil==2.9.0.post0
+python-dotenv==1.0.1
 pytz==2024.1
 PyYAML==6.0.2
 requests==2.32.3
@@ -71,4 +72,5 @@ urllib3==2.2.2
 uvicorn==0.30.6
 virtualenv==20.26.4
 xgboost==2.1.1
+yfinance==0.2.43
 zipp==3.20.1
