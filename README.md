@@ -83,7 +83,7 @@ conda activate modelworker
 ```
 #####	Install Required Dependencies:
 ```
-pip install -r requirements.txt
+pip install -r src/requirements.txt
 ```
 
 #### Folder Structure ####
@@ -92,32 +92,33 @@ The repository is structured as follows:
 
 ```
 allora-worker/
-│
-├── endpoints/                # Contains API endpoints for GET and POST requests
-│   ├── get/                  # Endpoints that handle GET requests
-│   └── post/                 # Endpoints that handle POST requests
-│
-├── package/                  # Contains all models and trained models
-│   ├── lstm/                 # Example model folder
-│   └── arima/                # Example model folder
-│   └── trained_models/       # Folder containing PT/PKL files for models
-│       ├── lstm/             # Trained model weights for LSTM
-│       └── arima/            # Trained model weights for ARIMA
-│
-├── utils/                    # Utility functions used across the worker
-│   ├── common.py             # Contains common functions and shared items
-│   ├── model_commons.py      # Contains common functions and shared items for models
-│
-├── main.py                   # FastAPI entry point for inference
-├── requirements.txt          # API-specific dependencies like FastAPI, Uvicorn, etc.
-└── README.md                 # Instructions for deployment and usage
+├── src/
+│   ├── endpoints/                    # Contains API endpoints for various functionality
+│   │   ├── model_inference.py         # Handles GET/POST for model inference
+│   │   └── data_preprocessing.py      # Handles GET/POST for data preprocessing
+│   ├── package/                      # Contains all models and trained models
+│   │   ├── lstm/
+│   │   │   ├── model.py                # LSTM model code
+│   │   │   └── trained/
+│   │   │       └── model.pt            # Trained LSTM model
+│   │   └── arima/
+│   │       ├── model.py                # ARIMA model code
+│   │       └── trained/
+│   │           └── model.pkl           # Trained ARIMA model
+│   ├── utils/                        # Utility functions used across the worker
+│   │   ├── utils_shared.py             # Shared/common utilities (logging, config, etc.)
+│   │   ├── model_utils.py              # Model-specific utilities (loading, saving)
+│   ├── main.py                       # FastAPI entry point for inference
+│   ├── requirements.txt              # Production dependencies (FastAPI, Uvicorn)
+│   ├── requirements-dev.txt          # Development dependencies (testing, linters)
+└── README.md                         # Instructions for deployment and usage
 ```
-- Endpoints have been modularized under the `endpoints/` folder.
-- Model weights are stored in the `package/trained_models/` folder for easier organization of model versions.
+- Endpoints have been modularized under the `src/endpoints/` folder.
+- Model weights are stored in the `src/package/trained_models/` folder for easier organization of model versions.
 
-#### Model Packaging Workflow ####
+#### Model Packaging Workflow allora-model-maker ####
 
-The models to be used in the Allora worker need to be packaged from the allora-model-maker repository.
+The models to be used in the Allora worker need to be packaged from the [allora-model-maker](https://github.com/allora-network/allora-model-maker) repository.
 Here’s the basic workflow:
 
 #####	Packaging a Model
@@ -129,7 +130,7 @@ This will generate the following:
 	•	The packaged model in packaged_models/ folder
 
 #####	Copying Packaged Model to allora-worker
-Copy the package folder into the root of the allora-worker repository.
+Copy the **package** folder into the root of the **allora-worker/src** repository.
 
 
 #### Model Configuration ####
@@ -174,7 +175,7 @@ curl -X POST "http://127.0.0.1:8000/inference" -H "Content-Type: application/jso
 	•	Input: URL-encoded JSON data containing model features.
 	•	Example Usage:
 ```
-curl "http://127.0.0.1:8000/inference?payload=%7B%22date%22%3A%20%5B…%5D%7D"
+curl "http://127.0.0.1:8000/inference"
 ```
 
 3.	#### GET: /update-model/
