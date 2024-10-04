@@ -1,8 +1,8 @@
 import json
 
-import pandas as pd
-import yfinance as yf
 from fastapi import APIRouter, HTTPException, Request
+
+from data.coingecko_data_fetcher import CoingeckoDataFetcher
 
 # pylint: disable=import-error
 from utils.common import load_model_from_config
@@ -10,9 +10,10 @@ from utils.common import load_model_from_config
 router = APIRouter()
 
 
-@router.get("/inference")
+@router.get("/inference/{coin}")
 async def get_inference(
     request: Request,
+    coin: str,
 ):
     # pylint: disable=line-too-long
     """
@@ -21,29 +22,8 @@ async def get_inference(
     """
     try:
 
-        # get latest price of ETH for thelast couple days from yahoo finance
-        eth_ticker = "ETH-USD"
-
-        # Fetch historical data for Ethereum for the last 5 days
-        eth_data = yf.Ticker(eth_ticker)
-        eth_hist = eth_data.history(period="5d")  # Retrieve the last 5 days of data
-
-        # Extract the necessary columns: date, open, high, low, close, volume
-        eth_hist.reset_index(inplace=True)  # Convert the date index to a column
-        eth_hist["date"] = pd.to_datetime(
-            eth_hist["Date"]
-        )  # Ensure it's in datetime format
-        eth_hist["open"] = eth_hist["Open"]
-        eth_hist["high"] = eth_hist["High"]
-        eth_hist["low"] = eth_hist["Low"]
-        eth_hist["close"] = eth_hist["Close"]
-        eth_hist["volume"] = eth_hist["Volume"]
-
-        # Select the columns in the correct order for the model input
-        input_data = eth_hist[["date", "open", "high", "low", "close", "volume"]].copy()
-        input_data.loc[:, "date"] = pd.to_datetime(input_data["date"])
-        # Drop any rows with NaN values (if needed)
-        input_data.dropna(inplace=True)
+        cgfetcher = CoingeckoDataFetcher(cache_duration=60)
+        input_data = cgfetcher.fetch_real_time_data(coin)
 
         # Load the model
         model = load_model_from_config(request.app.state.active_model)
