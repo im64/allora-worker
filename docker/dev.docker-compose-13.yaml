@@ -1,12 +1,12 @@
 services:
-  allora-worker:
+  allora-worker-13:
     platform: linux/amd64
-    container_name: allora-worker
+    container_name: allora-worker-13
     build:
       context: ..
-      dockerfile: docker/dev.Dockerfile
+      dockerfile: docker/dev.Dockerfile-13
     ports:
-      - "8000:8000"
+      - "8013:8013"
     environment:
       - PYTHONUNBUFFERED=1
       - MODEL=random_forest
@@ -15,19 +15,19 @@ services:
     volumes:
       - ../src:/app
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://127.0.0.1:8000/healthcheck"]
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:8013/healthcheck"]
       interval: 60s
       timeout: 10s
       retries: 5
 
-  allora-node:
+  allora-node-13:
     platform: linux/amd64
-    container_name: allora-node
+    container_name: allora-node-13
     image: alloranetwork/allora-offchain-node:v0.4.0
     volumes:
-      - ../allonode-data/.env:/node/.env
+      - ../allonode-data-13/.env:/node/.env
     depends_on:
-      allora-worker:
+      allora-worker-13:
         condition: service_healthy
     # fancy business to run socat and the offchain node in the same container without changing configs (127.0.0.1 -> allora-worker)
-    entrypoint: ["sh", "-c", "apk add socat && socat TCP-LISTEN:8000,fork TCP:allora-worker:8000 & exec ./allora_offchain_node"]
+    entrypoint: ["sh", "-c", "apk add socat && socat TCP-LISTEN:8013,fork TCP:allora-worker-13:8013 & exec ./allora_offchain_node"]

@@ -2,7 +2,7 @@
 
 # conda create --name modelworker python=3.9
 # conda activate modelworker
-# pip install -r requirements.txt
+# pip install -r src/requirements.txt
 # uvicorn main:app --reload --port 8000
 # feel free to test with curl or using the browser with the URL http://localhost:8000/docs
 

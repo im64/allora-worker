@@ -15,7 +15,7 @@ from dotenv import load_dotenv
 
 # Load the .env.local file if it exists, otherwise load .env
 if os.path.exists(".env.local"):
-    load_dotenv(dotenv_path=".env.local")
+    load_dotenv(dotenv_path=".env.local", override=True)
 else:
     load_dotenv()  # Defaults to loading .env
 

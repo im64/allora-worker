@@ -15,7 +15,7 @@ supervisord.log
 supervisord.pid
 .env.local
 allonode-data/config.json
-allonode-data/.env
+allonode-data*/.env
 src/data/sets/*
 fingerprint.py
 src/endpoints/inference.withinputs.py
