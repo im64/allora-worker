@@ -1,3 +1,4 @@
+import os
 import json
 from datetime import datetime, timedelta
 
@@ -34,8 +35,20 @@ async def get_update_model(
 
         end_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
         fetcher = DataFetcher()
+
+        # switch token to usd pair from INFER_TOKEN env variable
+        if "INFER_TOKEN" in os.environ:
+            token = os.environ["INFER_TOKEN"]
+        else
+            token = "ethusd"
+
+        # lower INFER_TOKEN check for eth, btc etc. and swap to usd pair
+        if token.lower() in ["eth", "btc", "ltc", "xrp", "sol", "ada", "dot", "doge"]:
+            token = token.lower() + "usd"
+
+
         input_data = fetcher.fetch_tiingo_crypto_data(
-            "ethusd", "2021-01-01", end_date, "1day"
+            token, "2021-01-01", end_date, "1day"
         )
 
         # Load the model
