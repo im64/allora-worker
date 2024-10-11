@@ -1,5 +1,5 @@
-import os
 import json
+import os
 from datetime import datetime, timedelta
 
 from fastapi import APIRouter, HTTPException, Request
@@ -39,13 +39,12 @@ async def get_update_model(
         # switch token to usd pair from INFER_TOKEN env variable
         if "INFER_TOKEN" in os.environ:
             token = os.environ["INFER_TOKEN"]
-        else
+        else:
             token = "ethusd"
 
         # lower INFER_TOKEN check for eth, btc etc. and swap to usd pair
         if token.lower() in ["eth", "btc", "ltc", "xrp", "sol", "ada", "dot", "doge"]:
             token = token.lower() + "usd"
-
 
         input_data = fetcher.fetch_tiingo_crypto_data(
             token, "2021-01-01", end_date, "1day"
