@@ -23,7 +23,7 @@ services:
   allora-node:
     platform: linux/amd64
     container_name: allora-node
-    image: alloranetwork/allora-offchain-node:v0.4.0
+    image: alloranetwork/allora-offchain-node:v0.5.0
     volumes:
       - ../allonode-data/.env:/node/.env
     depends_on:

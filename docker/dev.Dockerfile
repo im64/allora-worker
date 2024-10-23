@@ -1,5 +1,5 @@
 # Stage 1: Use the official allora-offchain-node image to extract the binary
-FROM --platform=linux/amd64 alloranetwork/allora-offchain-node:v0.4.0 AS allora_node
+FROM --platform=linux/amd64 alloranetwork/allora-offchain-node:v0.5.0 AS allora_node
 
 # Stage 2: Use the official Python 3.9 slim image for the allora-worker
 FROM --platform=linux/amd64 python:3.9-slim
