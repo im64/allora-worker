@@ -46,7 +46,7 @@ async def get_update_model(
         if token.lower() in ["eth", "btc", "ltc", "xrp", "sol", "ada", "dot", "doge"]:
             token = token.lower() + "usd"
 
-        input_data = fetcher.fetch_tiingo_crypto_data(
+        input_data = fetcher.fetch_data(
             token, "2021-01-01", end_date, "1day"
         )
 
