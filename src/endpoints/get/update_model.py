@@ -40,11 +40,11 @@ async def get_update_model(
         if "INFER_TOKEN" in os.environ:
             token = os.environ["INFER_TOKEN"]
         else:
-            token = "ethusd"
+            token = "ETHUSDT"
 
         # lower INFER_TOKEN check for eth, btc etc. and swap to usd pair
         if token.lower() in ["eth", "btc", "ltc", "xrp", "sol", "ada", "dot", "doge"]:
-            token = token.lower() + "usd"
+            token = token.upper() + "USDT"
 
         input_data = fetcher.fetch_data(
             token, "1d", "2024-01-01", end_date
