@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from fastapi import APIRouter, HTTPException, Request
 
 # pylint: disable=import-error
-from data.tiingo_data_fetcher import DataFetcher
+from data.binance_data_fetcher import DataFetcher
 
 # pylint: disable=import-error
 from utils.common import load_model_from_config
