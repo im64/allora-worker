@@ -47,7 +47,7 @@ async def get_update_model(
             token = token.lower() + "usd"
 
         input_data = fetcher.fetch_data(
-            token, "2021-01-01", end_date, "1day"
+            token, "2021-01-01", end_date, "1d"
         )
 
         # Load the model
