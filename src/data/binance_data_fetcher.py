@@ -103,7 +103,7 @@ class DataFetcher:
         converted_start_time = int(datetime.strptime(start_time, "%Y-%m-%d").timestamp()) * 1000 if start_time else int(time.time() * 1000)
         converted_end_time = int(datetime.strptime(end_time, "%Y-%m-%d").timestamp()) * 1000 if end_time else converted_start_time - (6 * 30 * 24 * 60 * 60 * 1000)
 
-        filename = self._generate_filename(symbol, start_time, end_time, interval)
+        filename = self._generate_filename(symbol, converted_start_time, converted_end_time, interval)
 
         # Always fetch fresh data to ensure we have the most recent prices
         all_data = []
@@ -114,8 +114,8 @@ class DataFetcher:
             current_end = min(current_start + chunk_size, converted_end_time)
 
             try:
-                # print(f"Fetching data for {symbol} from {pd.to_datetime(current_start, unit='ms')} "
-                #       f"to {pd.to_datetime(current_end, unit='ms')}...")
+                print(f"Fetching data for {symbol} from {pd.to_datetime(current_start, unit='ms')} "
+                      f"to {pd.to_datetime(current_end, unit='ms')}...")
 
                 chunk_data = self.fetch_klines(
                     symbol=symbol,
